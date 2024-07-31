@@ -167,7 +167,9 @@ jobs:
         sudo chown -R $USER bin
     - name: Predeploy
       shell: bash
-      run: ./scripts/predeploy.sh
+      run: |
+        sudo apt-get install binutils-x86-64-linux-gnu -y
+        ./scripts/predeploy.sh
     - name: Deploy
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
       shell: bash

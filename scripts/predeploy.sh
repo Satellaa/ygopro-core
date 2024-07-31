@@ -24,6 +24,6 @@ else
 		mv bin/$BUILD_CONFIG/libocgcore.dylib $DEPLOY_DIR
 	else
 		mv bin/$BUILD_CONFIG/libocgcore.so $DEPLOY_DIR
-		strip $DEPLOY_DIR/libocgcore.so
+		x86_64-linux-gnu-strip $DEPLOY_DIR/libocgcore.so
 	fi
 fi

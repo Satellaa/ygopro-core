@@ -4151,6 +4151,34 @@ LUA_STATIC_FUNCTION(GetStartingHand) {
 	lua_pushinteger(L, pduel->game_field->player[playerid].start_count);
 	return 1;
 }
+// custom
+LUA_STATIC_FUNCTION(GetStartingHandCustom) {
+	check_param_count(L, 1);
+	auto playerid = lua_get<uint8_t>(L, 1);
+	if(playerid != 0 && playerid != 1)
+		return 0;
+	lua_pushinteger(L, pduel->game_field->player[playerid].start_count);
+	return 1;
+}
+LUA_STATIC_FUNCTION(GetCardsInZone) {
+	check_param_count(L, 3);
+	auto playerid = lua_get<uint8_t>(L, 1);
+	auto zone = lua_get<uint32_t>(L, 2);
+	auto location = lua_get<int32_t>(L, 3);
+	
+	if(playerid != 0 && playerid != 1)
+		return 0;
+	
+	if(location == 1)
+		location = LOCATION_MZONE;
+	
+	card_set cset;
+	pduel->game_field->get_cards_in_zone(&cset, zone, playerid, location);
+	group* pgroup = pduel->new_group(std::move(cset));
+	interpreter::pushobject(L, pgroup);
+	return 1;
+}
+
 #define INFO_FUNC_FROM_CODE(lua_name,attr) \
 LUA_STATIC_FUNCTION(GetCard ##lua_name ##FromCode) { \
 	check_param_count(L, 1); \
@@ -4161,6 +4189,7 @@ LUA_STATIC_FUNCTION(GetCard ##lua_name ##FromCode) { \
 	lua_pushinteger(L, data.attr); \
 	return 1; \
 }
+
 INFO_FUNC_FROM_CODE(Alias, alias)
 INFO_FUNC_FROM_CODE(Type, type)
 INFO_FUNC_FROM_CODE(Level, level)

@@ -4151,15 +4151,6 @@ LUA_STATIC_FUNCTION(GetStartingHand) {
 	lua_pushinteger(L, pduel->game_field->player[playerid].start_count);
 	return 1;
 }
-// custom
-LUA_STATIC_FUNCTION(GetStartingHandCustom) {
-	check_param_count(L, 1);
-	auto playerid = lua_get<uint8_t>(L, 1);
-	if(playerid != 0 && playerid != 1)
-		return 0;
-	lua_pushinteger(L, pduel->game_field->player[playerid].start_count);
-	return 1;
-}
 LUA_STATIC_FUNCTION(GetCardsInZone) {
 	check_param_count(L, 3);
 	auto playerid = lua_get<uint8_t>(L, 1);

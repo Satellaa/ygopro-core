@@ -216,8 +216,9 @@ LUA_FUNCTION(IsLinkMarker) {
 	return 1;
 }
 LUA_FUNCTION(GetLinkedGroup) {
+	auto allow_st = lua_get<bool, false>(L, 2);
 	card_set cset;
-	self->get_linked_cards(&cset);
+	self->get_linked_cards(&cset, 0, allow_st);
 	auto pgroup = pduel->new_group(cset);
 	interpreter::pushobject(L, pgroup);
 	return 1;

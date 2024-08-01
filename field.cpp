@@ -803,10 +803,28 @@ int32_t field::get_forced_zones(card* pcard, uint8_t playerid, uint8_t location,
 }
 uint32_t field::get_rule_zone_fromex(int32_t playerid, card* pcard) {
 	if(is_flag(DUEL_EMZONE)) {
-		if(is_flag(DUEL_FSX_MMZONE) && pcard && pcard->is_position(POS_FACEDOWN) && (pcard->data.type & (TYPE_FUSION | TYPE_SYNCHRO | TYPE_XYZ)))
+		if(pcard->data.type & TYPE_PENDULUM) {
+			effect_set eset;
+			filter_player_effect(playerid, EFFECT_MR3_PENDULUM, &eset);
+			for(const auto& peff : eset) {
+				if(peff->is_flag(EFFECT_FLAG_COUNT_LIMIT) && peff->count_limit == 0) {
+					continue;
+				}
+				if(peff->target) {
+					pduel->lua->add_param<LuaParam::EFFECT>(peff);
+					pduel->lua->add_param<LuaParam::CARD>(pcard);
+					pduel->lua->add_param<LuaParam::INT>(playerid);
+					if (pduel->lua->check_condition(peff->target, 3)) {
+						return 0x7f;
+					}
+				}
+			}
+		}
+		if(is_flag(DUEL_FSX_MMZONE) && pcard && pcard->is_position(POS_FACEDOWN) && (pcard->data.type & (TYPE_FUSION | TYPE_SYNCHRO | TYPE_XYZ))) {
 			return 0x7f;
-		else
+		} else {
 			return get_linked_zone(playerid) | (1u << 5) | (1u << 6);
+		}
 	} else {
 		return 0x1f;
 	}

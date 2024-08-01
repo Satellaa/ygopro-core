@@ -222,7 +222,7 @@ public:
 		return (int32_t)(marker & dir);
 	}
 	uint32_t get_linked_zone(bool free = false);
-	void get_linked_cards(card_set* cset, uint32_t zones = 0);
+	void get_linked_cards(card_set* cset, uint32_t zones = 0, bool allow_st = false);
 	uint32_t get_mutual_linked_zone();
 	void get_mutual_linked_cards(card_set* cset);
 	int32_t is_link_state();

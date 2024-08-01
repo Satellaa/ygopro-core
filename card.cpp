@@ -1471,7 +1471,7 @@ uint32_t card::get_linked_zone(bool free) {
 	}
 	return zones;
 }
-void card::get_linked_cards(card_set* cset, uint32_t zones) {
+void card::get_linked_cards(card_set* cset, uint32_t zones, bool allow_st) {
 	cset->clear();
 	if(!(data.type & TYPE_LINK) || !(current.location & LOCATION_ONFIELD) || get_status(STATUS_SUMMONING | STATUS_SPSUMMON_STEP))
 		return;
@@ -1480,7 +1480,7 @@ void card::get_linked_cards(card_set* cset, uint32_t zones) {
 	pduel->game_field->get_cards_in_zone(cset, linked_zone, p, LOCATION_ONFIELD);
 	pduel->game_field->get_cards_in_zone(cset, linked_zone >> 16, 1 - p, LOCATION_ONFIELD);
 	for(auto it = cset->begin(); it != cset->end();) {
-		if((*it)->current.location == LOCATION_SZONE && !((*it)->get_type() & TYPE_LINK)) {
+		if((*it)->current.location == LOCATION_SZONE && !((*it)->get_type() & TYPE_LINK) && !allow_st) {
 			it = cset->erase(it);
 			continue;
 		}

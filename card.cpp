@@ -3176,6 +3176,9 @@ int32_t card::check_cost_condition(uint32_t ecode, uint8_t playerid, uint32_t su
 }
 // check if this is a normal summonable card
 int32_t card::is_summonable_card() {
+	if (is_affected_by_effect(EFFECT_SUMMONABLE_CARD)) {
+		return TRUE;
+	}
 	if(!(data.type & TYPE_MONSTER) || (data.type & (TYPE_RITUAL | TYPE_SPSUMMON
 					  | TYPE_FUSION | TYPE_SYNCHRO | TYPE_XYZ | TYPE_LINK
 					  | TYPE_TOKEN | TYPE_TRAPMONSTER)))

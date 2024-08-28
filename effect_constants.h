@@ -368,7 +368,10 @@ inline effect_flag operator|(effect_flag flag1, effect_flag flag2)
 #define EFFECT_FORCE_NORMAL_SUMMON_POSITION 426
 #define EFFECT_FORCE_SPSUMMON_POSITION      427
 #define EFFECT_DARKNESS_HIDE                428
-#define EFFECT_MR3_PENDULUM                 1000
+
+// Satellaa's core only
+#define EFFECT_MR3_PENDULUM                    1000
+#define EFFECT_SUMMONABLE_CARD                 1001
 
 #define EVENT_STARTUP               1000
 #define EVENT_FLIP                  1001

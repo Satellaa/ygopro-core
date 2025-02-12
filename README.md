@@ -11,7 +11,7 @@ and the premake5 build system.
 
 Clone this repo recursively
 ```
-git clone --recurse-submodules  https://github.com/edo9300/ygopro-core
+git clone --recurse-submodules  https://github.com/Satellaa/ygopro-core
 ```
 
 ### Visual Studio
